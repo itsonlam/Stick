@@ -1,0 +1,31 @@
+﻿Sticky Notes Program Development
+
+
+Stick Notes
+Completed
+1. Create Notes
+2. Border Layout: resizable
+3. Create multiple notes
+
+
+In Progress
+-Implementation of a way to save text. possible solutions: Linked list, read and write to .txt
+-if using save to txt file, randomly generate textfilename
+-DELETE button to delete text file and note f.close
+-getlocation then setlocation on startup
+-implementation of saving current location and loading on startup.
+-find a way to minimize ALL. SIMPLE like regular sticky notes
+-find a way to create a new note not overlapping
+
+
+KNOWN bugs:
+-find a way to read in int not just string
+-fix bug to read last char or digit
+
+
+
+
+UI:
+auto -open at startup
+Minimize ALL
+user able to change font, size, and bold

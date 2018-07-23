@@ -1,5 +1,7 @@
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.Panel;
+import java.awt.Window;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -24,8 +26,15 @@ import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
-public class NewNote extends JFrame {
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
+public class NewNote extends JFrame{
 
 	private JPanel contentPane;
 
@@ -33,7 +42,8 @@ public class NewNote extends JFrame {
 	 * Launch the application.
 	 */
 	
-
+	public String s;
+	
 	public static String contents;
 	
 	public static void main(String[] args) {
@@ -50,7 +60,7 @@ public class NewNote extends JFrame {
 		
 		//creating linked list for contents of all Notes
 		/*
-		LinkedList<String> linkedlist = new LinkedList<String>();
+		LinkedList<String> linked list = new LinkedList<String>();
 		linkedlist.add(NewNote.contents);
 		System.out.println(linkedlist.toString());
 		*/ //DEPRACATED. testing file reader and writer
@@ -63,45 +73,72 @@ public class NewNote extends JFrame {
 	 * Create the frame.
 	 */
 	public NewNote() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		//prompt to close frame
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		addWindowListener(new WindowAdapter() {
+			  public void windowClosing(WindowEvent e) {
+			    int confirmed = JOptionPane.showConfirmDialog(null, 
+			        "Are you sure you want to exit the program?", "Exit Program Message Box",
+			        JOptionPane.YES_NO_OPTION);
+
+			    if (confirmed == JOptionPane.YES_OPTION) {
+			      dispose();
+			    }
+			  }
+			});
+		
+		
+		
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		
-		//JPanel panel = new JPanel();
-		//panel.setLayout(new BorderLayout());  //give your JPanel a BorderLayout
-		JTextArea textArea = new JTextArea();
-		
-		//JScrollPane scroll = new JScrollPane(textArea);
-		//panel.add(scroll, BorderLayout.CENTER);
-		
-		//Key listener to save text to linked list or file
-		textArea.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyTyped(KeyEvent arg0) {
-				//JOptionPane.showMessageDialog(textArea, "stuff was typed");
-				contents = textArea.getText();
-				//System.out.print(contents);
-			/*	try {
-					File file = new File("test1.txt");
-					FileWriter fileWriter = new FileWriter(file);
-					PrintWriter printWriter = new PrintWriter(fileWriter);
-					printWriter.print(contents);
-					fileWriter.flush();
-					fileWriter.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}    */
-			}
-		});
 		contentPane.setLayout(new BorderLayout(0, 0));
 		
+		
+		
+		JTextArea textArea = new JTextArea();
+		
+		//key listener and saves text to test1
+		textArea.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent arg0) {
+				/*
+				 * 
+				 * deprecated. using linked list to store location and text when key is pressed
+				BufferedWriter writer;
+				
+				try{
+					writer = new BufferedWriter( new FileWriter("test1.txt", false));
+					textArea.write(writer);
+					writer.close();
+					//JOptionPane.showMessageDialog(null, "File has been saved", "File Saved", JOptionPane.INFORMATION_MESSAGE);
+					//true for rewrite, false for override
+				}catch (IOException e) {
+		            JOptionPane.showMessageDialog(null, "Error Occured");
+		            e.printStackTrace();
+		        }   */
+				
+				s = textArea.getText();
+				System.out.println(s);
+			}
+		});
 		textArea.setBackground(new Color(102, 205, 170));
 		contentPane.add(textArea);
-		textArea.setLineWrap(true);
-		textArea.setWrapStyleWord(true);
+		
+		
 		//read string from input notes. add to linked list.
 		
+		//Scroll Pane as needed
+		JScrollPane scrollbar1 = new JScrollPane(textArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		getContentPane().add(scrollbar1, BorderLayout.CENTER);
+		//word wrap
+		textArea.setLineWrap(true);
+		textArea.setWrapStyleWord(true);
+		
+		
+		
 	}
+	
+	
 }

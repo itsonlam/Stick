@@ -6,6 +6,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
+import org.w3c.dom.Node;
+
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.CardLayout;
@@ -16,11 +18,15 @@ import java.awt.event.ActionListener;
 import java.util.LinkedList;
 import java.awt.event.ActionEvent;
 
-public class Fram1 extends NewNote {
+public class Fram1 extends Note {
 
 	private JFrame frame;
 
+	
+	private LinkedList<Note> notesLinkedList = new LinkedList<Note>();
+   
 	/**
+	 *
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
@@ -35,6 +41,7 @@ public class Fram1 extends NewNote {
 			}
 		});
 		
+
 		
 	}
 
@@ -54,7 +61,7 @@ public class Fram1 extends NewNote {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
-		
+
 		//NEW BUTTON
 		JButton btnNew = new JButton("New");
 		btnNew.addActionListener(new ActionListener() {
@@ -69,7 +76,7 @@ public class Fram1 extends NewNote {
 					//frame.dispose();
 					NewNote newNote = new NewNote();
 					newNote.setVisible(true);
-					newNote.setLocationRelativeTo(btnNew);
+					newNote.setLocationRelativeTo(null);
 				
 					
 					

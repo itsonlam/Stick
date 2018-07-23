@@ -22,7 +22,7 @@ public class Fram1 extends Note {
 
 	private JFrame frame;
 
-	
+	//linked list to store Note Object 
 	private LinkedList<Note> notesLinkedList = new LinkedList<Note>();
    
 	/**

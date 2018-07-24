@@ -90,6 +90,10 @@ public class Dashboard extends Note {
 
 		//NEW BUTTON
 		JButton btnNewNote = new JButton("");
+		btnNewNote.setOpaque(false);
+		btnNewNote.setContentAreaFilled(false);
+		btnNewNote.setBorderPainted(false);
+		//btnNewNote.setFocusPainted(false);
 		btnNewNote.setIcon(new ImageIcon(Dashboard.class.getResource("/resources/stickyicon_64.png")));
 		btnNewNote.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -118,6 +122,9 @@ public class Dashboard extends Note {
 		
 		JButton btnOption = new JButton("");
 		btnOption.setIcon(new ImageIcon(Dashboard.class.getResource("/resources/optionsicon_32.png")));
+		btnOption.setOpaque(false);
+		btnOption.setContentAreaFilled(false);
+		btnOption.setBorderPainted(false);
 		btnOption.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 
@@ -125,6 +132,10 @@ public class Dashboard extends Note {
 		});
 		
 		btnNewNoteBook = new JButton("");
+		btnNewNoteBook.setOpaque(false);
+		btnNewNoteBook.setContentAreaFilled(false);
+		btnNewNoteBook.setBorderPainted(false);
+		//btnNewNoteBook.setFocusPainted(false);
 		btnNewNoteBook.setIcon(new ImageIcon(Dashboard.class.getResource("/resources/notepadicon_64.png")));
 		btnNewNoteBook.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -141,6 +152,10 @@ public class Dashboard extends Note {
 		});
 		
 		btnSDICalculator = new JButton("");
+		btnSDICalculator.setOpaque(false);
+		btnSDICalculator.setContentAreaFilled(false);
+		btnSDICalculator.setBorderPainted(false);
+		//btnSDICalculator.setFocusPainted(false);
 		btnSDICalculator.setIcon(new ImageIcon(Dashboard.class.getResource("/resources/calculatoricon_64.png")));
 		
 		JButton btnLoad = new JButton("Load");
@@ -164,6 +179,10 @@ public class Dashboard extends Note {
 		JLabel lblSdiCalculator = new JLabel("SDI Calculator");
 		
 		JButton btnHelp = new JButton("");
+		btnHelp.setOpaque(false);
+		btnHelp.setContentAreaFilled(false);
+		btnHelp.setBorderPainted(false);
+		//btnHelp.setFocusPainted(false);
 		btnHelp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JOptionPane.showMessageDialog(null, "Version: 1.12\nCreated by: An Lam & Dobien Cortez");

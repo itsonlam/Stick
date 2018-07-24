@@ -1,6 +1,7 @@
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.Panel;
+import java.awt.Point;
 import java.awt.Window;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -37,12 +38,19 @@ import java.awt.event.ActionEvent;
 public class NewNote extends JFrame{
 
 	private JPanel contentPane;
-
+	
+	//note attributes cannot be changed from outside
+	// default color of note
+	private Color color = new Color(102, 205, 170);
+	private Point noteLocation;
+	private String noteTitle;
+	private String s;
+	
 	/**
 	 * Launch the application.
 	 */
 	
-	public String s;
+	
 	
 	public static String contents;
 	
@@ -78,7 +86,7 @@ public class NewNote extends JFrame{
 		addWindowListener(new WindowAdapter() {
 			  public void windowClosing(WindowEvent e) {
 			    int confirmed = JOptionPane.showConfirmDialog(null, 
-			        "Are you sure you want to exit the program?", "Exit Program Message Box",
+			        "Are you sure you want to exit this note?", "Exit Program Message Box",
 			        JOptionPane.YES_NO_OPTION);
 
 			    if (confirmed == JOptionPane.YES_OPTION) {
@@ -123,7 +131,7 @@ public class NewNote extends JFrame{
 				System.out.println(s);
 			}
 		});
-		textArea.setBackground(new Color(102, 205, 170));
+		textArea.setBackground(color);
 		contentPane.add(textArea);
 		
 		
@@ -137,7 +145,40 @@ public class NewNote extends JFrame{
 		textArea.setWrapStyleWord(true);
 		
 		
-		
+	}
+	
+	/*SETTERS
+	*
+	**
+	able to change color from outside this class */
+	
+	public void setColor(Color newColor){
+		this.color = newColor;
+	}
+	//set location used when reload of notes
+	public void setLocation(Point newlocation){
+		this.noteLocation = newlocation;
+	}
+	public void setNoteTitle(String newTitle){
+		//this.noteTitle = newTitle;
+		//cannot change note title from outside
+	}
+	
+	/*
+	 * GETTERS able to get colors, location and title of notes for linked list
+	 */
+	
+	public Color getNoteColor(){
+		return this.color;
+	}
+	public Point getNoteLocation(){
+		return this.noteLocation;
+	}
+	public String getNoteTitle(){
+		return noteTitle;
+	}
+	public String getTextArea(){
+		return s;
 	}
 	
 	

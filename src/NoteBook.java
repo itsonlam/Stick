@@ -1,8 +1,8 @@
 import java.awt.Point;
 
-//this class is a Note object which we will store in a linked list in Dash board
+//this class is a Note book object which we will store in a linked list in Dash board
 
-public class Note extends NewNote{
+public class NoteBook extends NewNote{
 	//for the location of the current note
 	private static Point location;
 	//String of text from new note

@@ -34,6 +34,7 @@ import java.awt.event.WindowEvent;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.Toolkit;
 
 public class NewNote extends JFrame{
 
@@ -81,6 +82,8 @@ public class NewNote extends JFrame{
 	 * Create the frame.
 	 */
 	public NewNote() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(NewNote.class.getResource("/resources/iconmonkey_small.png")));
+		setTitle("Note");
 		//prompt to close frame
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		addWindowListener(new WindowAdapter() {

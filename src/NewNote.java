@@ -35,10 +35,14 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Toolkit;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.JRadioButton;
+import java.awt.GridLayout;
+import java.awt.GridBagLayout;
+import java.awt.GridBagConstraints;
 
 public class NewNote extends JFrame{
-
-	private JPanel contentPane;
 	
 	//note attributes cannot be changed from outside
 	// default color of note
@@ -54,6 +58,8 @@ public class NewNote extends JFrame{
 	
 	
 	public static String contents;
+	private JTextArea textAreaNote;
+	private JScrollPane scrollPane;
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -82,6 +88,11 @@ public class NewNote extends JFrame{
 	 * Create the frame.
 	 */
 	public NewNote() {
+		initComponents();
+
+	}
+	
+	private void initComponents() {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(NewNote.class.getResource("/resources/iconmonkey_small.png")));
 		setTitle("Note");
 		//prompt to close frame
@@ -89,7 +100,7 @@ public class NewNote extends JFrame{
 		addWindowListener(new WindowAdapter() {
 			  public void windowClosing(WindowEvent e) {
 			    int confirmed = JOptionPane.showConfirmDialog(null, 
-			        "Are you sure you want to exit this note?", "Exit Program Message Box",
+			        "Are you sure you want to delete this note?", "Exit Program Message Box",
 			        JOptionPane.YES_NO_OPTION);
 
 			    if (confirmed == JOptionPane.YES_OPTION) {
@@ -97,59 +108,25 @@ public class NewNote extends JFrame{
 			    }
 			  }
 			});
+
+		setBounds(100, 100, 875, 504);
+		getContentPane().setLayout(null);
+		getContentPane().setLayout(null);
+		getContentPane().setLayout(new BorderLayout(0, 0));
 		
+		scrollPane = new JScrollPane();
+		scrollPane.setBounds(180, 90, 679, 375);
+		getContentPane().add(scrollPane);
 		
-		
-		setBounds(100, 100, 450, 300);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
-		contentPane.setLayout(new BorderLayout(0, 0));
-		
-		
-		
-		JTextArea textArea = new JTextArea();
-		
-		//key listener and saves text to test1
-		textArea.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyPressed(KeyEvent arg0) {
-				/*
-				 * 
-				 * deprecated. using linked list to store location and text when key is pressed
-				BufferedWriter writer;
-				
-				try{
-					writer = new BufferedWriter( new FileWriter("test1.txt", false));
-					textArea.write(writer);
-					writer.close();
-					//JOptionPane.showMessageDialog(null, "File has been saved", "File Saved", JOptionPane.INFORMATION_MESSAGE);
-					//true for rewrite, false for override
-				}catch (IOException e) {
-		            JOptionPane.showMessageDialog(null, "Error Occured");
-		            e.printStackTrace();
-		        }   */
-				
-				s = textArea.getText();
-				System.out.println(s);
-			}
-		});
-		textArea.setBackground(color);
-		contentPane.add(textArea);
-		
-		
-		//read string from input notes. add to linked list.
-		
-		//Scroll Pane as needed
-		JScrollPane scrollbar1 = new JScrollPane(textArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		getContentPane().add(scrollbar1, BorderLayout.CENTER);
-		//word wrap
-		textArea.setLineWrap(true);
-		textArea.setWrapStyleWord(true);
-		
+		textAreaNote = new JTextArea();
+		textAreaNote.setBackground(new Color(135, 206, 235));
+		textAreaNote.setWrapStyleWord(true);
+		textAreaNote.setWrapStyleWord(true);
+		scrollPane.setViewportView(textAreaNote);
 		
 	}
-	
+
+
 	/*SETTERS
 	*
 	**
@@ -183,6 +160,4 @@ public class NewNote extends JFrame{
 	public String getTextArea(){
 		return s;
 	}
-	
-	
 }

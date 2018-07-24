@@ -25,6 +25,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JInternalFrame;
 import java.awt.Toolkit;
+import javax.swing.ImageIcon;
 
 public class NewNoteBook extends JFrame {
 
@@ -90,15 +91,30 @@ public class NewNoteBook extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		
-		JButton btnDeleteNote = new JButton("Delete Note");
+		JButton btnDeleteNote = new JButton("");
+		btnDeleteNote.setOpaque(false);
+		btnDeleteNote.setContentAreaFilled(false);
+		btnDeleteNote.setBorderPainted(false);
+		//btnDeleteNote.setFocusPainted(false);
+		btnDeleteNote.setIcon(new ImageIcon(NewNoteBook.class.getResource("/resources/trashicon_32.png")));
 		btnDeleteNote.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 			}
 		});
 		
-		JButton btnPreferences = new JButton("Preferences");
+		JButton btnPreferences = new JButton("");
+		btnPreferences.setOpaque(false);
+		btnPreferences.setContentAreaFilled(false);
+		btnPreferences.setBorderPainted(false);
+		//btnPreferences.setFocusPainted(false);
+		btnPreferences.setIcon(new ImageIcon(NewNoteBook.class.getResource("/resources/optionsicon_32.png")));
 		
-		JButton btnNewNote = new JButton("New Note");
+		JButton btnNewNote = new JButton("");
+		btnNewNote.setOpaque(false);
+		btnNewNote.setContentAreaFilled(false);
+		btnNewNote.setBorderPainted(false);
+		//btnNewNote.setFocusPainted(false);
+		btnNewNote.setIcon(new ImageIcon(NewNoteBook.class.getResource("/resources/newnoteeicon_32.png")));
 		textFieldNoteBookTitle = new JTextField();
 		textFieldNoteBookTitle.setBackground(new Color(135, 206, 235));
 		textFieldNoteBookTitle.setToolTipText("Enter Notebook Title");
@@ -125,11 +141,11 @@ public class NewNoteBook extends JFrame {
 				.addGroup(gl_contentPane.createSequentialGroup()
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING, false)
 						.addComponent(textFieldNoteBookTitle, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE)
-						.addComponent(btnNewNote, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE)
-						.addComponent(btnPreferences, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE)
-						.addComponent(btnDeleteNote, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE))
+						.addComponent(btnDeleteNote, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addComponent(btnPreferences, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addComponent(btnNewNote, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 495, Short.MAX_VALUE)
+					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 488, Short.MAX_VALUE)
 					.addContainerGap())
 		);
 		

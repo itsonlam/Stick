@@ -13,7 +13,7 @@ public class Note extends NewNote{
 	public static void main(String[] args) {
 		NewNote notes = new NewNote();
 		//noteDetails = notes.s;
-		location = notes.getContentPane().getLocationOnScreen();
+		//location = notes.getContentPane().getLocationOnScreen();
 		
 		
 	}

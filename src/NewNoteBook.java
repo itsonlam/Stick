@@ -22,18 +22,23 @@ import java.awt.Color;
 import javax.swing.JTextArea;
 import java.awt.Dimension;
 import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
+import javax.swing.JInternalFrame;
+import java.awt.Toolkit;
 
 public class NewNoteBook extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField textFieldNoteBookTitle;
-
+	
 	//private variables
 	private Color bgColor = new Color(135, 206, 235); //default background color
 	private Color noteColor = new Color(255, 255, 224); //default note color
 	private int pages;
 	private Point noteBookLocation;
 	private String noteBookTitle;
+	private JScrollPane scrollPane;
+	private JTextArea textAreaNotes;
 	
 	
 	/**
@@ -56,6 +61,14 @@ public class NewNoteBook extends JFrame {
 	 * Create the frame.
 	 */
 	public NewNoteBook() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(NewNoteBook.class.getResource("/resources/iconmonkey_small.png")));
+		
+		initComponents();
+		
+	}
+	
+	
+	private void initComponents() {
 		setTitle("Notebook");
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		//prompts the user if they want to close the note book
@@ -91,30 +104,21 @@ public class NewNoteBook extends JFrame {
 		textFieldNoteBookTitle.setToolTipText("Enter Notebook Title");
 		textFieldNoteBookTitle.setColumns(10);
 		
-		JTextArea textAreaNotes = new JTextArea();
-		textAreaNotes.setBackground(noteColor);
-		
-		JScrollPane scrollPane = new JScrollPane();
+		scrollPane = new JScrollPane();
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.TRAILING)
 				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addContainerGap()
-							.addComponent(textAreaNotes, GroupLayout.DEFAULT_SIZE, 273, Short.MAX_VALUE))
-						.addComponent(textFieldNoteBookTitle, GroupLayout.DEFAULT_SIZE, 283, Short.MAX_VALUE))
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
+						.addComponent(scrollPane, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 273, Short.MAX_VALUE)
+						.addComponent(textFieldNoteBookTitle, GroupLayout.DEFAULT_SIZE, 273, Short.MAX_VALUE))
 					.addGap(18)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addComponent(btnNewNote, GroupLayout.PREFERRED_SIZE, 42, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(btnPreferences, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(btnDeleteNote, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addComponent(scrollPane)
-							.addContainerGap())))
+					.addComponent(btnNewNote, GroupLayout.PREFERRED_SIZE, 42, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(btnPreferences, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(btnDeleteNote, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap())
 		);
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -125,14 +129,18 @@ public class NewNoteBook extends JFrame {
 						.addComponent(btnPreferences, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE)
 						.addComponent(btnDeleteNote, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE))
 					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 506, Short.MAX_VALUE)
-						.addComponent(textAreaNotes, GroupLayout.DEFAULT_SIZE, 511, Short.MAX_VALUE)))
+					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 495, Short.MAX_VALUE)
+					.addContainerGap())
 		);
+		
+		textAreaNotes = new JTextArea();
+		textAreaNotes.setLineWrap(true);
+		textAreaNotes.setWrapStyleWord(true);
+		scrollPane.setViewportView(textAreaNotes);
 		contentPane.setLayout(gl_contentPane);
+		
 	}
-	
-	
+
 	/*
 	 * Setters for note book
 	 */
@@ -164,5 +172,4 @@ public class NewNoteBook extends JFrame {
 	public String getNoteBookTitle(){
 		return this.noteBookTitle;
 	}
-	
 }

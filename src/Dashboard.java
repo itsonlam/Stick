@@ -18,6 +18,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.LinkedList;
+import java.util.Map;
+import java.util.Random;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
 import javax.swing.JTextField;
@@ -30,14 +32,25 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JLabel;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
+import Helpers.*;
 
 public class Dashboard extends Note {
 
 	private JFrame frmDashboard;
 
+	Random rand = new Random();
+	
 	//linked list to store Note Object 
 	private LinkedList<Note> notesLinkedList = new LinkedList<Note>();
 	private LinkedList<NoteBook> noteBookLinkedList = new LinkedList<NoteBook>();
+	
+	//testing linked list implementation
+	private static LinkedList<String> test = new LinkedList<String>();
+	
+	
 	private JButton btnNewNoteBook;
 	private JButton btnSDICalculator;
 	private final ButtonGroup btgLayout = new ButtonGroup();
@@ -77,6 +90,23 @@ public class Dashboard extends Note {
 
 	}
 	
+	
+	//called from the new Note class to add note object to linked list
+	public static void addTestObject(){
+		test.add(0, "");
+		System.out.println(test.toString());
+	}
+	
+	public static void setTestObject(String note){
+		test.set(0,note);
+		System.out.println(test.toString());
+	}
+	/*
+	public void addNoteObject(Note note){
+		notesLinkedList.add(note);
+		System.out.println(notesLinkedList);
+	}*/
+	
 	public void initComponents(){
 		frmDashboard = new JFrame();
 		frmDashboard.setResizable(false);
@@ -90,6 +120,15 @@ public class Dashboard extends Note {
 
 		//NEW BUTTON
 		JButton btnNewNote = new JButton("");
+		btnNewNote.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				int randInt = rand.nextInt(3);
+				NewNote.setNoteNumber(randInt);
+				addTestObject();
+			}
+		});
+		
 		btnNewNote.setOpaque(false);
 		btnNewNote.setContentAreaFilled(false);
 		btnNewNote.setBorderPainted(false);
@@ -108,11 +147,7 @@ public class Dashboard extends Note {
 					NewNote newNote = new NewNote();
 					newNote.setVisible(true);
 					newNote.setLocationRelativeTo(null);
-				
-					
-					
-					
-					
+		
 				} catch(Exception e){
 					JOptionPane.showMessageDialog(null, e);
 				}
@@ -265,4 +300,13 @@ public class Dashboard extends Note {
 		);
 		frmDashboard.getContentPane().setLayout(groupLayout);
 	}
+	
+	/*
+	 * HASH TEST
+	 */
+	//public static void testHashMap(){
+		//HashMap.put(1, 12);
+		
+//	}
+	
 }

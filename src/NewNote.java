@@ -50,7 +50,9 @@ public class NewNote extends JFrame{
 	private Point noteLocation;
 	private String noteTitle;
 	private String s;
-	
+	private static int noteNumber;
+	//Dashboard db = new Dashboard();
+	//Note noteobj = new Note();
 	/**
 	 * Launch the application.
 	 */
@@ -71,6 +73,7 @@ public class NewNote extends JFrame{
 					e.printStackTrace();
 				}
 			}
+			
 		});
 		
 		//creating linked list for contents of all Notes
@@ -119,6 +122,17 @@ public class NewNote extends JFrame{
 		getContentPane().add(scrollPane);
 		
 		textAreaNote = new JTextArea();
+		textAreaNote.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent arg0) {
+				//implement method to save to linked list
+				Dashboard.setTestObject(textAreaNote.getText());
+				System.out.println(noteNumber);
+				//Dashboard.testHashMap();
+				//implement a way to update the linked list rather than adding new node
+				
+			}
+		});
 		textAreaNote.setBackground(new Color(135, 206, 235));
 		textAreaNote.setWrapStyleWord(true);
 		textAreaNote.setWrapStyleWord(true);
@@ -143,6 +157,9 @@ public class NewNote extends JFrame{
 		//this.noteTitle = newTitle;
 		//cannot change note title from outside
 	}
+	public static void setNoteNumber(int number){
+		noteNumber = number;
+	}
 	
 	/*
 	 * GETTERS able to get colors, location and title of notes for linked list
@@ -160,4 +177,8 @@ public class NewNote extends JFrame{
 	public String getTextArea(){
 		return s;
 	}
+	public static int getNoteNumber(){
+		return noteNumber;
+	}
+	
 }

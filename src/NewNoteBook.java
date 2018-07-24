@@ -26,6 +26,8 @@ import javax.swing.JTabbedPane;
 import javax.swing.JInternalFrame;
 import java.awt.Toolkit;
 import javax.swing.ImageIcon;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class NewNoteBook extends JFrame {
 
@@ -150,6 +152,12 @@ public class NewNoteBook extends JFrame {
 		);
 		
 		textAreaNotes = new JTextArea();
+		textAreaNotes.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				//implement method to save Notebook to linked list. 
+			}
+		});
 		textAreaNotes.setLineWrap(true);
 		textAreaNotes.setWrapStyleWord(true);
 		scrollPane.setViewportView(textAreaNotes);

@@ -29,3 +29,8 @@ UI:
 auto -open at startup
 Minimize ALL
 user able to change font, size, and bold
+
+07/24/2018 5:03PM
+current linked list will save notes in reverse order. and only in sequential order. 
+going back to the old linked list will just override the latest linked list
+will need to find a way to know which note you are in.

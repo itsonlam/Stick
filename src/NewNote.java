@@ -47,18 +47,13 @@ public class NewNote extends JFrame{
 	//note attributes cannot be changed from outside
 	// default color of note
 	private Color color = new Color(102, 205, 170);
-	private Point noteLocation;
-	private String noteTitle;
-	private String s;
+	private static Point noteLocation;
+	private static String noteTitle;
+	private static String s;
 	private static int noteNumber;
-	//Dashboard db = new Dashboard();
-	//Note noteobj = new Note();
 	/**
 	 * Launch the application.
 	 */
-	
-	
-	
 	public static String contents;
 	private JTextArea textAreaNote;
 	private JScrollPane scrollPane;
@@ -73,7 +68,6 @@ public class NewNote extends JFrame{
 					e.printStackTrace();
 				}
 			}
-			
 		});
 		
 		//creating linked list for contents of all Notes
@@ -82,17 +76,14 @@ public class NewNote extends JFrame{
 		linkedlist.add(NewNote.contents);
 		System.out.println(linkedlist.toString());
 		*/ //DEPRACATED. testing file reader and writer
-		
-		
 		}
 	
-
+	
 	/**
 	 * Create the frame.
 	 */
 	public NewNote() {
 		initComponents();
-
 	}
 	
 	private void initComponents() {
@@ -112,7 +103,7 @@ public class NewNote extends JFrame{
 			  }
 			});
 
-		setBounds(100, 100, 875, 504);
+		setBounds(100, 100, 331, 291);
 		getContentPane().setLayout(null);
 		getContentPane().setLayout(null);
 		getContentPane().setLayout(new BorderLayout(0, 0));
@@ -130,14 +121,12 @@ public class NewNote extends JFrame{
 				System.out.println(noteNumber);
 				//Dashboard.testHashMap();
 				//implement a way to update the linked list rather than adding new node
-				
 			}
 		});
 		textAreaNote.setBackground(new Color(135, 206, 235));
 		textAreaNote.setWrapStyleWord(true);
 		textAreaNote.setWrapStyleWord(true);
 		scrollPane.setViewportView(textAreaNote);
-		
 	}
 
 
@@ -168,13 +157,13 @@ public class NewNote extends JFrame{
 	public Color getNoteColor(){
 		return this.color;
 	}
-	public Point getNoteLocation(){
-		return this.noteLocation;
+	public static Point getNoteLocation(){
+		return noteLocation;
 	}
-	public String getNoteTitle(){
+	public static String getNoteTitle(){
 		return noteTitle;
 	}
-	public String getTextArea(){
+	public static String getTextArea(){
 		return s;
 	}
 	public static int getNoteNumber(){

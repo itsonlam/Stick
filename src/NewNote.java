@@ -42,6 +42,14 @@ import java.awt.GridLayout;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 
+//////////////////////////////////////////////////////////////////////////
+//
+// 	This is the new note class. When in classic notes mode, users can 
+//	use this to create new notes. Notes will be stored in a linked list
+// 	and load upon restart of dash board.
+//
+////////////////////////////////////////////////////////////////////////////
+
 public class NewNote extends JFrame{
 	
 	//note attributes cannot be changed from outside

@@ -1,8 +1,12 @@
 import java.awt.Point;
 
-//this class is a Note object which we will store in a linked list in Dash board
+////////////////////////////////////////////////////////////////////////////////////
+//
+//    This class is a Note object which we will store in a linked list in Dash board
+//
+///////////////////////////////////////////////////////////////////////////////////
 
-public class Note extends NoteBook{
+public class Note{
 	
 	//////////////////////////////////////////////////////////////////////////
 	//INSTANCE VARIABLES
@@ -19,13 +23,13 @@ public class Note extends NoteBook{
 		noteDetails = NewNote.getTextArea();
 		noteTitle = NewNote.getNoteTitle();
 	}
-	
 	public Note(String newNoteTitle, String newNoteDetails){
 		noteTitle = newNoteTitle;
 		noteDetails = newNoteDetails;
 		//location = newLocation;
 	}
-	
+	//////////////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////////////
 	 
 	
 	//setters

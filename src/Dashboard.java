@@ -50,6 +50,11 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
+//////////////////////////////////////////////////////////////////////////
+//
+// 	This is the Dash board class. this is the main class of the program.
+//
+//////////////////////////////////////////////////////////////////////////
 public class Dashboard extends Note {
 
 	private JFrame frmDashboard;
@@ -112,7 +117,7 @@ public class Dashboard extends Note {
 		notesLinkedList.addElement(new Note("Note title 5", "This is the fifth note"));
 		notesLinkedList.addElement(new Note("Note title 6", "This is the sixth note"));
 		notesLinkedList.addElement(new Note("Note title 7", "This is the seventh note"));
-		notesLinkedList.addElement(new Note("Note title 8", "This is the eigth note"));
+		notesLinkedList.addElement(new Note("Note title 8", "This is the eighth note"));
 		//System.out.println(notesLinkedList.toString());
 	}*/
 

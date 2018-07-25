@@ -13,6 +13,8 @@ import java.awt.FlowLayout;
 import java.awt.CardLayout;
 import javax.swing.BoxLayout;
 import java.awt.GridBagLayout;
+import java.awt.Point;
+
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
@@ -22,20 +24,31 @@ import java.util.Map;
 import java.util.Random;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
+import java.awt.Component;
+
 import javax.swing.JTextField;
 import javax.swing.JCheckBox;
 import javax.swing.ImageIcon;
 import javax.swing.JRadioButton;
 import javax.swing.ButtonGroup;
+import javax.swing.DefaultListCellRenderer;
+import javax.swing.DefaultListModel;
+
 import java.awt.Toolkit;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.ListModel;
 import javax.swing.JLabel;
+import javax.swing.JList;
+
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import Helpers.*;
+import javax.swing.JMenuBar;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
 
 public class Dashboard extends Note {
 
@@ -44,8 +57,8 @@ public class Dashboard extends Note {
 	Random rand = new Random();
 	
 	//linked list to store Note Object 
-	private LinkedList<Note> notesLinkedList = new LinkedList<Note>();
-	private LinkedList<NoteBook> noteBookLinkedList = new LinkedList<NoteBook>();
+	private static DefaultListModel<Note> notesLinkedList = new DefaultListModel<Note>();
+	private static LinkedList<NoteBook> noteBookLinkedList = new LinkedList<NoteBook>();
 	
 	//testing linked list implementation
 	private static LinkedList<String> test = new LinkedList<String>();
@@ -54,6 +67,17 @@ public class Dashboard extends Note {
 	private JButton btnNewNoteBook;
 	private JButton btnSDICalculator;
 	private final ButtonGroup btgLayout = new ButtonGroup();
+	private JMenu mnFile;
+	private JMenuItem mntmClose;
+	private JMenu mnOptions;
+	private JMenu mnHelp;
+	private JButton btnNewNote;
+	private JButton btnModernLayout;
+	private JMenuItem mntmLoadNotes;
+	private JMenuItem mntmLoadClassicLayout;
+	private JMenuItem mntmNewMenuItem_1;
+	private JMenuItem mntmAbout;
+    private static JList noteListView;
    
 	/**
 	 *
@@ -72,22 +96,47 @@ public class Dashboard extends Note {
 		});
 		
 
+		/*
+		 * TESTING LINKED LIST HERE
+		 * Create Linked list and load into Note Book
+		 */
+		//noteListView = new JList();
+		
 		
 	}
+/*	private static void initNoteModel(){
+		notesLinkedList.addElement(new Note("Note title 1", "This is the first note"));
+		notesLinkedList.addElement(new Note("Note title 2", "This is the second note"));
+		notesLinkedList.addElement(new Note("Note title 3", "This is the third note"));
+		notesLinkedList.addElement(new Note("Note title 4", "This is the fourth note"));
+		notesLinkedList.addElement(new Note("Note title 5", "This is the fifth note"));
+		notesLinkedList.addElement(new Note("Note title 6", "This is the sixth note"));
+		notesLinkedList.addElement(new Note("Note title 7", "This is the seventh note"));
+		notesLinkedList.addElement(new Note("Note title 8", "This is the eigth note"));
+		//System.out.println(notesLinkedList.toString());
+	}*/
 
+	/*//returns a location used for testing
+	static Point x;
+	private static Point location(){
+		x.setLocation(100, 100);
+		return x;
+	}*/
 	/**
 	 * Create the application.
 	 */
 	public Dashboard() {
 		initialize();
+		createEvents();
 	}
+
+
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
 		initComponents();
-
 	}
 	
 	
@@ -107,9 +156,69 @@ public class Dashboard extends Note {
 		System.out.println(notesLinkedList);
 	}*/
 	
+	private void createEvents() {
+		/*
+		 * action listener for new note button
+		 */
+		btnNewNote.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try{
+					//JOptionPane.showMessageDialog(null, "New Button Pressed.");
+					//implementation of new Note
+					//frame.dispose();
+					NewNote newNote = new NewNote();
+					newNote.setVisible(true);
+					newNote.setLocationRelativeTo(null);
+		
+				} catch(Exception e){
+					JOptionPane.showMessageDialog(null, e);
+				}
+			}
+		});
+		
+		/*
+		 * action listener for new note book button
+		 * 
+		 */
+		btnNewNoteBook.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try{	
+							NewNoteBook newNoteBook = new NewNoteBook();
+							newNoteBook.setVisible(true);
+							newNoteBook.setLocationRelativeTo(null);
+							
+							/*
+							 * add test list model
+							 */
+							
+							//noteListView.setModel(notesLinkedList);
+							//initNoteModel();
+							
+/*							noteListView.setCellRenderer(new DefaultListCellRenderer() {
+					            @Override
+					            public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+					                Component renderer = super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+					                if (renderer instanceof JLabel && value instanceof Note) {
+					                    // Here value will be of the Type 'CD'
+					                    ((JLabel) renderer).setText(((Note) value).getNoteTitle());
+					                }
+					                return renderer;
+					            }
+					        });*/
+						
+						} catch(Exception g){
+							JOptionPane.showMessageDialog(null, g);
+						}
+			}
+		});
+
+	}
+	
+	/*
+	 * Initialize components method for UI
+	 */
 	public void initComponents(){
 		frmDashboard = new JFrame();
-		frmDashboard.setResizable(false);
 		frmDashboard.setIconImage(Toolkit.getDefaultToolkit().getImage(Dashboard.class.getResource("/resources/iconmonkey_small.png")));
 		frmDashboard.getContentPane().setBackground(new Color(135, 206, 235));
 		frmDashboard.setBackground(Color.WHITE);
@@ -119,7 +228,7 @@ public class Dashboard extends Note {
 		
 
 		//NEW BUTTON
-		JButton btnNewNote = new JButton("");
+		btnNewNote = new JButton("");
 		btnNewNote.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
@@ -134,26 +243,7 @@ public class Dashboard extends Note {
 		btnNewNote.setBorderPainted(false);
 		//btnNewNote.setFocusPainted(false);
 		btnNewNote.setIcon(new ImageIcon(Dashboard.class.getResource("/resources/stickyicon_64.png")));
-		btnNewNote.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				
-				
-				try{
-					
-				
-					//JOptionPane.showMessageDialog(null, "New Button Pressed.");
-					//implementation of new Note
-					//frame.dispose();
-					NewNote newNote = new NewNote();
-					newNote.setVisible(true);
-					newNote.setLocationRelativeTo(null);
 		
-				} catch(Exception e){
-					JOptionPane.showMessageDialog(null, e);
-				}
-				
-			}
-		});
 		
 		JButton btnOption = new JButton("");
 		btnOption.setIcon(new ImageIcon(Dashboard.class.getResource("/resources/optionsicon_32.png")));
@@ -172,19 +262,7 @@ public class Dashboard extends Note {
 		btnNewNoteBook.setBorderPainted(false);
 		//btnNewNoteBook.setFocusPainted(false);
 		btnNewNoteBook.setIcon(new ImageIcon(Dashboard.class.getResource("/resources/notepadicon_64.png")));
-		btnNewNoteBook.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				try{
-							
-							NewNoteBook newNoteBook = new NewNoteBook();
-							newNoteBook.setVisible(true);
-							newNoteBook.setLocationRelativeTo(null);
-						
-						} catch(Exception g){
-							JOptionPane.showMessageDialog(null, g);
-						}
-			}
-		});
+
 		
 		btnSDICalculator = new JButton("");
 		btnSDICalculator.setOpaque(false);
@@ -193,73 +271,48 @@ public class Dashboard extends Note {
 		//btnSDICalculator.setFocusPainted(false);
 		btnSDICalculator.setIcon(new ImageIcon(Dashboard.class.getResource("/resources/calculatoricon_64.png")));
 		
-		JButton btnLoad = new JButton("Load");
-		btnLoad.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-			}
-		});
-		
-		JRadioButton rdbtnModernLayout = new JRadioButton("Modern Layout");
-		btgLayout.add(rdbtnModernLayout);
-		rdbtnModernLayout.setBackground(new Color(135, 206, 235));
-		
-		JRadioButton rdbtnNewRadioButton = new JRadioButton("Classic Layout");
-		btgLayout.add(rdbtnNewRadioButton);
-		rdbtnNewRadioButton.setBackground(new Color(135, 206, 235));
-		
 		JLabel lblNewNoteBook = new JLabel("New Notebook");
 		
 		JLabel lblNewNote = new JLabel("New Note");
 		
 		JLabel lblSdiCalculator = new JLabel("SDI Calculator");
 		
-		JButton btnHelp = new JButton("");
-		btnHelp.setOpaque(false);
-		btnHelp.setContentAreaFilled(false);
-		btnHelp.setBorderPainted(false);
-		//btnHelp.setFocusPainted(false);
-		btnHelp.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(null, "Version: 1.12\nCreated by: An Lam & Dobien Cortez");
-			}
-		});
-		btnHelp.setIcon(new ImageIcon(Dashboard.class.getResource("/resources/helpicon_32.png")));
+		btnModernLayout = new JButton("");
+		btnModernLayout.setOpaque(false);
+		btnModernLayout.setContentAreaFilled(false);
+		btnModernLayout.setBorderPainted(false);
+		btnModernLayout.setIcon(new ImageIcon(Dashboard.class.getResource("/resources/modernicon_32.png")));
+		
+		
+		
+		
+		/*
+		 * START GROUP LAYOUT
+		 */
 		GroupLayout groupLayout = new GroupLayout(frmDashboard.getContentPane());
 		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
+			groupLayout.createParallelGroup(Alignment.TRAILING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addComponent(btnNewNoteBook, GroupLayout.PREFERRED_SIZE, 99, GroupLayout.PREFERRED_SIZE)
 						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(10)
-							.addComponent(lblSdiCalculator))
+							.addGap(14)
+							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+								.addComponent(btnSDICalculator, GroupLayout.PREFERRED_SIZE, 73, GroupLayout.PREFERRED_SIZE)
+								.addComponent(lblNewNoteBook)
+								.addComponent(lblSdiCalculator))))
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addGroup(groupLayout.createSequentialGroup()
-							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING, false)
-								.addComponent(btnSDICalculator, Alignment.LEADING, 0, 0, Short.MAX_VALUE)
-								.addComponent(btnNewNoteBook, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-								.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
-									.addGap(10)
-									.addComponent(lblNewNoteBook)))
 							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addGroup(groupLayout.createSequentialGroup()
-									.addComponent(btnNewNote)
-									.addGap(18)
-									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-										.addGroup(groupLayout.createSequentialGroup()
-											.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-												.addComponent(rdbtnNewRadioButton, GroupLayout.PREFERRED_SIZE, 109, GroupLayout.PREFERRED_SIZE)
-												.addComponent(rdbtnModernLayout, GroupLayout.PREFERRED_SIZE, 109, GroupLayout.PREFERRED_SIZE))
-											.addPreferredGap(ComponentPlacement.RELATED)
-											.addComponent(btnOption, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE))
-										.addComponent(btnLoad, GroupLayout.PREFERRED_SIZE, 74, GroupLayout.PREFERRED_SIZE)))
-								.addGroup(groupLayout.createSequentialGroup()
-									.addGap(10)
-									.addComponent(lblNewNote, GroupLayout.PREFERRED_SIZE, 59, GroupLayout.PREFERRED_SIZE)))))
-					.addGap(14))
-				.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
-					.addContainerGap(348, Short.MAX_VALUE)
-					.addComponent(btnHelp, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE)
+							.addComponent(btnNewNote))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGap(31)
+							.addComponent(lblNewNote, GroupLayout.PREFERRED_SIZE, 59, GroupLayout.PREFERRED_SIZE)))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(btnModernLayout, GroupLayout.PREFERRED_SIZE, 0, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED, 115, Short.MAX_VALUE)
+					.addComponent(btnOption, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE)
 					.addContainerGap())
 		);
 		groupLayout.setVerticalGroup(
@@ -268,45 +321,58 @@ public class Dashboard extends Note {
 					.addContainerGap()
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addGroup(groupLayout.createSequentialGroup()
+							.addGap(47)
+							.addComponent(btnModernLayout))
+						.addGroup(groupLayout.createSequentialGroup()
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addGroup(groupLayout.createSequentialGroup()
-									.addComponent(btnOption)
-									.addGap(215))
 								.addGroup(groupLayout.createSequentialGroup()
 									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 										.addGroup(groupLayout.createSequentialGroup()
-											.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
-												.addComponent(btnNewNote, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-												.addComponent(btnNewNoteBook, GroupLayout.DEFAULT_SIZE, 91, Short.MAX_VALUE))
+											.addComponent(btnNewNoteBook)
 											.addPreferredGap(ComponentPlacement.RELATED)
 											.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 												.addComponent(lblNewNoteBook, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE)
 												.addComponent(lblNewNote)))
-										.addGroup(groupLayout.createSequentialGroup()
-											.addComponent(rdbtnNewRadioButton)
-											.addPreferredGap(ComponentPlacement.RELATED)
-											.addComponent(rdbtnModernLayout)
-											.addPreferredGap(ComponentPlacement.UNRELATED)
-											.addComponent(btnLoad)))
-									.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-									.addComponent(btnSDICalculator, GroupLayout.PREFERRED_SIZE, 81, GroupLayout.PREFERRED_SIZE)
+										.addComponent(btnNewNote))
 									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(lblSdiCalculator)
-									.addGap(24)))
-							.addGap(33))
-						.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
-							.addComponent(btnHelp, GroupLayout.PREFERRED_SIZE, 33, GroupLayout.PREFERRED_SIZE)
-							.addContainerGap())))
+									.addComponent(btnSDICalculator, GroupLayout.PREFERRED_SIZE, 81, GroupLayout.PREFERRED_SIZE))
+								.addComponent(btnOption))
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(lblSdiCalculator)))
+					.addGap(44))
 		);
 		frmDashboard.getContentPane().setLayout(groupLayout);
-	}
-	
-	/*
-	 * HASH TEST
-	 */
-	//public static void testHashMap(){
-		//HashMap.put(1, 12);
 		
-//	}
-	
+		JMenuBar menuBar = new JMenuBar();
+		frmDashboard.setJMenuBar(menuBar);
+		
+		mnFile = new JMenu("File");
+		menuBar.add(mnFile);
+		
+		mntmLoadNotes = new JMenuItem("Load Notes");
+		mntmLoadNotes.setIcon(new ImageIcon(Dashboard.class.getResource("/resources/replay_24.png")));
+		mnFile.add(mntmLoadNotes);
+		
+		mntmClose = new JMenuItem("Close");
+		mntmClose.setIcon(new ImageIcon(Dashboard.class.getResource("/resources/closeicon_24.png")));
+		mnFile.add(mntmClose);
+		
+		mnOptions = new JMenu("Options");
+		menuBar.add(mnOptions);
+		
+		mntmLoadClassicLayout = new JMenuItem("Load Classic Layout");
+		mntmLoadClassicLayout.setIcon(new ImageIcon(Dashboard.class.getResource("/resources/replay_24.png")));
+		mnOptions.add(mntmLoadClassicLayout);
+		
+		mntmNewMenuItem_1 = new JMenuItem("Load Modern Layout");
+		mntmNewMenuItem_1.setIcon(new ImageIcon(Dashboard.class.getResource("/resources/notesmodern_24.png")));
+		mnOptions.add(mntmNewMenuItem_1);
+		
+		mnHelp = new JMenu("Help");
+		menuBar.add(mnHelp);
+		
+		mntmAbout = new JMenuItem("About");
+		mntmAbout.setIcon(new ImageIcon(Dashboard.class.getResource("/resources/help_24.png")));
+		mnHelp.add(mntmAbout);
+	} //end initialize components
 }

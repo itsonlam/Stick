@@ -2,25 +2,30 @@ import java.awt.Point;
 
 //this class is a Note book object which we will store in a linked list in Dash board
 
-public class NoteBook extends NewNote{
-	//for the location of the current note
-	private static Point location;
-	//String of text from new note
+public class NoteBook{
+	
+	//////////////////////////////////////////////////////////////////////////
+	//INSTANCE VARIABLES
+	private Point noteBookLocation;
 	private static String noteDetails;
+	private static String noteTitle;
+	private static String noteBookTitle;
+	//////////////////////////////////////////////////////////////////////////
 	
 
-	
-	public static void main(String[] args) {
-		NewNote notes = new NewNote();
-		//noteDetails = notes.s;
-		location = notes.getContentPane().getLocationOnScreen();
-		
-		
+	//////////////////////////////////////////////////////////////////////////
+	// Constructors
+	public NoteBook(){
+		super();
+		noteBookLocation = NewNoteBook.getNoteBookLocation();
+		noteDetails = "";
+		noteTitle = "Note Title";
+		noteBookTitle = "NoteBook Title";
 	}
 	
 	//setters
 	public void setLocation(Point newLocation){
-		this.location = newLocation;
+		this.noteBookLocation = newLocation;
 	}
 	public void setNoteDetails(String newString){
 		this.noteDetails = newString;
@@ -28,7 +33,7 @@ public class NoteBook extends NewNote{
 	
 	//getters
 	public Point getLocation(){
-		return this.location;
+		return this.noteBookLocation;
 	}
 	public String getNoteDetails(){
 		return noteDetails;

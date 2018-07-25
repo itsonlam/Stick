@@ -42,6 +42,15 @@ import javax.swing.JMenu;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+//////////////////////////////////////////////////////////////////////////
+//
+// 	This is the notebook class. it opens up the user's notebook and 
+// 	displays the user's notebook title and list of notes. 
+// 	users can easily switch from this layout to the classic lay out of notes
+//
+//////////////////////////////////////////////////////////////////////////
+
+
 public class NewNoteBook extends JFrame {
 
 	private static DefaultListModel<Note> notesLinkedList = new DefaultListModel<Note>();
@@ -90,9 +99,9 @@ public class NewNoteBook extends JFrame {
 		createEvents();
 	}
 	
-	/*
-	 * TESTING LINKED LIST
-	 */
+	/*	//////////////////////////////////////////////////////////////////////////
+	 * TESTING LINKED LIST WILL NOT USE IN FINAL VERSION
+	 */	//////////////////////////////////////////////////////////////////////////
 	private static void initNoteModel(){
 		notesLinkedList.addElement(new Note("Note title 1", "This is the first note"));
 		notesLinkedList.addElement(new Note("Note title 2", "This is the second note"));
@@ -104,9 +113,9 @@ public class NewNoteBook extends JFrame {
 		notesLinkedList.addElement(new Note("Note title 8", "This is the eigth note"));
 	}
 	
-	/*
-	 * Events Here
-	 */
+	/*	//////////////////////////////////////////////////////////////////////////
+	 * Events Here WILL CLEAN UP CODE FOR ALL EVENT AND LISTENERS HERE
+	 */	//////////////////////////////////////////////////////////////////////////
 	private void createEvents() {
 		
 		mntmLoadNotes.addMouseListener(new MouseAdapter() {
@@ -120,9 +129,11 @@ public class NewNoteBook extends JFrame {
 		});
 	}
 	
+	//////////////////////////////////////////////////////////////////////////
 	/*
 	 * initializing components
 	 */
+	//////////////////////////////////////////////////////////////////////////
 	private void initComponents() {
 		
 		setTitle("Notebook");
@@ -206,10 +217,11 @@ public class NewNoteBook extends JFrame {
 		initNoteModel();
 		
 		
-		
+		//////////////////////////////////////////////////////////////////////////
 		/*
 		 * GROUPED LAYOUT. DO NOT EDIT
 		 */
+		//////////////////////////////////////////////////////////////////////////
 		scrollPane_1 = new JScrollPane();
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
@@ -253,6 +265,9 @@ public class NewNoteBook extends JFrame {
 		noteList = new JList();
 		scrollPane_1.setViewportView(noteList);
 		
+		//////////////////////////////////////////////////////////////////////////
+		//clicking on list of note book TESTING **
+		//////////////////////////////////////////////////////////////////////////
 		noteList.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -297,8 +312,16 @@ public class NewNoteBook extends JFrame {
 		scrollPane.setViewportView(textAreaNotes);
 		contentPane.setLayout(gl_contentPane);
 		
-	}
+	}   
+	//////////////////////////////////////////////////////////////////////////
+	// END OF INITITALIZING COMPONENTS
+	//////////////////////////////////////////////////////////////////////////
+	
 
+	
+	//////////////////////////////////////////////////////////////////////////
+	//SETTERS AND GETTERS BELOW
+	//////////////////////////////////////////////////////////////////////////
 	/*
 	 * Setters for note book
 	 */

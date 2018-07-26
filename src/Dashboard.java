@@ -49,6 +49,8 @@ import Helpers.*;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.JCheckBoxMenuItem;
+import javax.swing.JRadioButtonMenuItem;
 
 //////////////////////////////////////////////////////////////////////////
 //
@@ -71,7 +73,7 @@ public class Dashboard extends Note {
 	
 	private JButton btnNewNoteBook;
 	private JButton btnSDICalculator;
-	private final ButtonGroup btgLayout = new ButtonGroup();
+	private final ButtonGroup btgCopyStyle = new ButtonGroup();
 	private JMenu mnFile;
 	private JMenuItem mntmClose;
 	private JMenu mnOptions;
@@ -83,6 +85,10 @@ public class Dashboard extends Note {
 	private JMenuItem mntmNewMenuItem_1;
 	private JMenuItem mntmAbout;
     private static JList noteListView;
+    private JMenu mnCopyTools;
+    private JRadioButtonMenuItem rdbtnmntmOneclickCopy;
+    private JRadioButtonMenuItem rdbtnmntmOnhoverCopy;
+    private final ButtonGroup buttonGroup = new ButtonGroup();
    
 	/**
 	 *
@@ -372,6 +378,20 @@ public class Dashboard extends Note {
 		mntmNewMenuItem_1 = new JMenuItem("Load Modern Layout");
 		mntmNewMenuItem_1.setIcon(new ImageIcon(Dashboard.class.getResource("/resources/notesmodern_24.png")));
 		mnOptions.add(mntmNewMenuItem_1);
+		
+		mnCopyTools = new JMenu("Copy Tools");
+		mnCopyTools.setIcon(new ImageIcon(Dashboard.class.getResource("/resources/copy_24.png")));
+		mnOptions.add(mnCopyTools);
+		
+		rdbtnmntmOneclickCopy = new JRadioButtonMenuItem("One-Click Copy");
+		buttonGroup.add(rdbtnmntmOneclickCopy);
+		rdbtnmntmOneclickCopy.setIcon(new ImageIcon(Dashboard.class.getResource("/resources/mouseclick_24.png")));
+		mnCopyTools.add(rdbtnmntmOneclickCopy);
+		
+		rdbtnmntmOnhoverCopy = new JRadioButtonMenuItem("On-Hover Copy");
+		buttonGroup.add(rdbtnmntmOnhoverCopy);
+		rdbtnmntmOnhoverCopy.setIcon(new ImageIcon(Dashboard.class.getResource("/resources/lightning_24.png")));
+		mnCopyTools.add(rdbtnmntmOnhoverCopy);
 		
 		mnHelp = new JMenu("Help");
 		menuBar.add(mnHelp);

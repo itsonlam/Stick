@@ -11,8 +11,8 @@ public class Note{
 	//////////////////////////////////////////////////////////////////////////
 	//INSTANCE VARIABLES
 	private Point location;
-	private static String noteDetails;
-	private static String noteTitle;
+	private String noteDetails;
+	private String noteTitle;
 	//////////////////////////////////////////////////////////////////////////
 
 	//////////////////////////////////////////////////////////////////////////
@@ -38,6 +38,9 @@ public class Note{
 	}
 	public void setNoteDetails(String newString){
 		this.noteDetails = newString;
+	}
+	public void setNoteTitle(String newTitle) {
+		this.noteTitle = newTitle;
 	}
 	
 	//getters

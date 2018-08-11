@@ -2,6 +2,7 @@ import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.Vector;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -41,6 +42,8 @@ import javax.swing.JMenuItem;
 import javax.swing.JMenu;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.event.ListSelectionEvent;
 
 //////////////////////////////////////////////////////////////////////////
 //
@@ -54,6 +57,9 @@ import java.awt.event.MouseEvent;
 public class NewNoteBook extends JFrame {
 
 	private static DefaultListModel<Note> notesLinkedList = new DefaultListModel<Note>();
+	
+	static Vector<Note> vec = new Vector<Note>(4);
+	
 	private JPanel contentPane;
 	private JTextField textFieldNoteBookTitle;
 	
@@ -63,8 +69,6 @@ public class NewNoteBook extends JFrame {
 	private int pages;
 	private static Point noteBookLocation;
 	private String noteBookTitle;
-	private JScrollPane scrollPane;
-	private JTextArea textAreaNotes;
 	private JMenuBar menuBar;
 	private JMenu mnFile;
 	private JMenu mnEdit;
@@ -72,7 +76,10 @@ public class NewNoteBook extends JFrame {
 	private JMenuItem mntmQuit;
 	private static JList noteList;
 	private JMenuItem mntmLoadNotes;
-	private JScrollPane scrollPane_1;
+	private JScrollPane pagesScrollPane;
+	private JTextArea textAreaNote1;
+	
+	private static int noteCounter;
 	
 	/**
 	 * Launch the application.
@@ -103,14 +110,24 @@ public class NewNoteBook extends JFrame {
 	 * TESTING LINKED LIST WILL NOT USE IN FINAL VERSION
 	 */	//////////////////////////////////////////////////////////////////////////
 	private static void initNoteModel(){
-		notesLinkedList.addElement(new Note("Note title 1", "This is the first note"));
-		notesLinkedList.addElement(new Note("Note title 2", "This is the second note"));
-		notesLinkedList.addElement(new Note("Note title 3", "This is the third note"));
-		notesLinkedList.addElement(new Note("Note title 4", "This is the fourth note"));
-		notesLinkedList.addElement(new Note("Note title 5", "This is the fifth note"));
-		notesLinkedList.addElement(new Note("Note title 6", "This is the sixth note"));
-		notesLinkedList.addElement(new Note("Note title 7", "This is the seventh note"));
-		notesLinkedList.addElement(new Note("Note title 8", "This is the eigth note"));
+		notesLinkedList.addElement(new Note("Page title 1", "This is the first note"));
+		notesLinkedList.addElement(new Note("Page title 2", "This is the second note"));
+		
+		Note thisIsNote1 = new Note(); 
+		noteCounter++;
+		Note thisIsNote2 = new Note();
+		noteCounter++;
+		
+		thisIsNote1.setNoteDetails("This is details for note1");
+		thisIsNote1.setNoteTitle("This is the first note");
+		
+		thisIsNote2.setNoteDetails("This is details for note2");
+		thisIsNote2.setNoteTitle("This is the second note");
+		
+		vec.add(thisIsNote1);
+		vec.add(thisIsNote2);
+		//vec.add(new Note("Page title 1", "This is the first note"));
+		//vec.add(new Note("Page title 2", "This is the second note"));
 	}
 	
 	/*	//////////////////////////////////////////////////////////////////////////
@@ -201,19 +218,24 @@ public class NewNoteBook extends JFrame {
 		btnNewNote.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				createNewNoteEvent();
 			}
+
+			
 		});
+		
 		btnNewNote.setOpaque(false);
 		btnNewNote.setContentAreaFilled(false);
 		btnNewNote.setBorderPainted(false);
 		//btnNewNote.setFocusPainted(false);
 		btnNewNote.setIcon(new ImageIcon(NewNoteBook.class.getResource("/resources/newnoteeicon_32.png")));
 		textFieldNoteBookTitle = new JTextField();
+		textFieldNoteBookTitle.setText("Notebook Title 1");
 		textFieldNoteBookTitle.setBackground(new Color(135, 206, 235));
 		textFieldNoteBookTitle.setToolTipText("Enter Notebook Title");
 		textFieldNoteBookTitle.setColumns(10);
 		
-		scrollPane = new JScrollPane();
+		
 		initNoteModel();
 		
 		
@@ -222,19 +244,18 @@ public class NewNoteBook extends JFrame {
 		 * GROUPED LAYOUT. DO NOT EDIT
 		 */
 		//////////////////////////////////////////////////////////////////////////
-		scrollPane_1 = new JScrollPane();
+		pagesScrollPane = new JScrollPane();
+		
+		JScrollPane note_1ScrollPane = new JScrollPane();
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.TRAILING)
 				.addGroup(gl_contentPane.createSequentialGroup()
+					.addContainerGap()
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addContainerGap()
-							.addComponent(textFieldNoteBookTitle, GroupLayout.DEFAULT_SIZE, 369, Short.MAX_VALUE)
-							.addGap(18))
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 391, Short.MAX_VALUE)
-							.addPreferredGap(ComponentPlacement.RELATED)))
+						.addComponent(note_1ScrollPane, GroupLayout.DEFAULT_SIZE, 393, Short.MAX_VALUE)
+						.addComponent(textFieldNoteBookTitle, GroupLayout.DEFAULT_SIZE, 393, Short.MAX_VALUE))
+					.addGap(18)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addComponent(btnNewNote, GroupLayout.PREFERRED_SIZE, 42, GroupLayout.PREFERRED_SIZE)
@@ -242,7 +263,7 @@ public class NewNoteBook extends JFrame {
 							.addComponent(btnPreferences, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(btnDeleteNote, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE))
-						.addComponent(scrollPane_1, GroupLayout.PREFERRED_SIZE, 140, GroupLayout.PREFERRED_SIZE))
+						.addComponent(pagesScrollPane, GroupLayout.PREFERRED_SIZE, 140, GroupLayout.PREFERRED_SIZE))
 					.addContainerGap())
 		);
 		gl_contentPane.setVerticalGroup(
@@ -257,67 +278,72 @@ public class NewNoteBook extends JFrame {
 							.addComponent(btnNewNote, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 492, Short.MAX_VALUE)
-						.addComponent(scrollPane_1, GroupLayout.PREFERRED_SIZE, 492, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap())
+						.addComponent(note_1ScrollPane)
+						.addComponent(pagesScrollPane, GroupLayout.DEFAULT_SIZE, 492, Short.MAX_VALUE))
+					.addGap(20))
 		);
 		
-		noteList = new JList();
-		scrollPane_1.setViewportView(noteList);
-		
-		//////////////////////////////////////////////////////////////////////////
-		//clicking on list of note book TESTING **
-		//////////////////////////////////////////////////////////////////////////
-		noteList.addMouseListener(new MouseAdapter() {
+		JList pagesList = new JList();
+
+		pagesList.addMouseListener(new MouseAdapter() {
 			@Override
+			/*
 			public void mouseClicked(MouseEvent e) {
-				Note clickedNote = notesLinkedList.getElementAt(noteList.getSelectedIndex());
-				//JOptionPane.showMessageDialog(null, clickedNote.toString());
-				String getNoteText = notesLinkedList.getElementAt(noteList.getSelectedIndex()).getNoteDetails();
-				textAreaNotes.setText(getNoteText);
+				
+			}*/
+			public void mouseReleased(MouseEvent e) {
+				int i = pagesList.getSelectedIndex();
+				textAreaNote1.setText(vec.get(i).getNoteDetails());
 			}
 		});
+		
+		pagesScrollPane.setViewportView(pagesList);
+		
+		textAreaNote1 = new JTextArea();
+		textAreaNote1.setLineWrap(true);
+		textAreaNote1.setWrapStyleWord(true);
+		textAreaNote1.setBackground(Color.YELLOW);
+		textAreaNote1.setForeground(Color.BLACK);
+		note_1ScrollPane.setViewportView(textAreaNote1);
+		contentPane.setLayout(gl_contentPane);
+		
+		textAreaNote1.setText(vec.get(0).getNoteDetails());
+		
 		/*
 		 * adding linked list of notes to note list model
 		 */
-		noteList.setModel(notesLinkedList);
+		pagesList.setModel(notesLinkedList);
 		/*
 		 * Render to display certain text only in list model in Note book
 		 */
-		noteList.setCellRenderer(new DefaultListCellRenderer() {
+		pagesList.setCellRenderer(new DefaultListCellRenderer() {
             @Override
             public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
                 Component renderer = super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
                 if (renderer instanceof JLabel && value instanceof Note) {
-                    // Here value will be of the Type 'CD'
                     ((JLabel) renderer).setText(((Note) value).getNoteTitle());
                 }
                 return renderer;
             }
         });
-		
-		textAreaNotes = new JTextArea();
-		textAreaNotes.setBackground(new Color(255, 255, 204));
-		textAreaNotes.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyReleased(KeyEvent e) {
-				//implement method to save Notebook to linked list. 
-				String s;
-				s = textAreaNotes.getText();
-				notesLinkedList.getElementAt(noteList.getSelectedIndex()).setNoteDetails(s);
-			}
-		});
-		textAreaNotes.setLineWrap(true);
-		textAreaNotes.setWrapStyleWord(true);
-		scrollPane.setViewportView(textAreaNotes);
-		contentPane.setLayout(gl_contentPane);
-		
 	}   
 	//////////////////////////////////////////////////////////////////////////
 	// END OF INITITALIZING COMPONENTS
 	//////////////////////////////////////////////////////////////////////////
 	
 
+	
+	private void createNewNoteEvent() {
+		// TODO Auto-generated method stub
+		noteCounter++;
+		Note genericNote = new Note();
+		genericNote.setNoteTitle("This is a new note Title" + noteCounter);
+		genericNote.setNoteDetails("This is new note details" + noteCounter);
+		vec.add(genericNote);
+		
+		
+		
+	}
 	
 	//////////////////////////////////////////////////////////////////////////
 	//SETTERS AND GETTERS BELOW

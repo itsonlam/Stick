@@ -11,6 +11,8 @@ import org.w3c.dom.Node;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.CardLayout;
+
+import javax.swing.AbstractButton;
 import javax.swing.BoxLayout;
 import java.awt.GridBagLayout;
 import java.awt.Point;
@@ -89,6 +91,8 @@ public class Dashboard extends Note {
     private JRadioButtonMenuItem rdbtnmntmOneclickCopy;
     private JRadioButtonMenuItem rdbtnmntmOnhoverCopy;
     private final ButtonGroup buttonGroup = new ButtonGroup();
+
+	private JButton mbNewButton;
    
 	/**
 	 *
@@ -161,11 +165,7 @@ public class Dashboard extends Note {
 		test.set(0,note);
 		System.out.println(test.toString());
 	}
-	/*
-	public void addNoteObject(Note note){
-		notesLinkedList.add(note);
-		System.out.println(notesLinkedList);
-	}*/
+
 	
 	private void createEvents() {
 		/*
@@ -223,7 +223,9 @@ public class Dashboard extends Note {
 			}
 		});
 
-	}
+
+		
+	} //END create events
 	
 	/*
 	 * Initialize components method for UI
@@ -237,7 +239,8 @@ public class Dashboard extends Note {
 		frmDashboard.setBounds(100, 100, 402, 329);
 		frmDashboard.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-
+		
+		
 		//NEW BUTTON
 		btnNewNote = new JButton("");
 		btnNewNote.addMouseListener(new MouseAdapter() {
@@ -322,7 +325,7 @@ public class Dashboard extends Note {
 							.addComponent(lblNewNote, GroupLayout.PREFERRED_SIZE, 59, GroupLayout.PREFERRED_SIZE)))
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(btnModernLayout, GroupLayout.PREFERRED_SIZE, 0, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED, 115, Short.MAX_VALUE)
+					.addPreferredGap(ComponentPlacement.RELATED, 146, Short.MAX_VALUE)
 					.addComponent(btnOption, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE)
 					.addContainerGap())
 		);
@@ -331,25 +334,23 @@ public class Dashboard extends Note {
 				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(47)
-							.addComponent(btnModernLayout))
+						.addComponent(btnOption)
 						.addGroup(groupLayout.createSequentialGroup()
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 								.addGroup(groupLayout.createSequentialGroup()
-									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-										.addGroup(groupLayout.createSequentialGroup()
-											.addComponent(btnNewNoteBook)
-											.addPreferredGap(ComponentPlacement.RELATED)
-											.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-												.addComponent(lblNewNoteBook, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE)
-												.addComponent(lblNewNote)))
-										.addComponent(btnNewNote))
+									.addComponent(btnNewNoteBook)
 									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(btnSDICalculator, GroupLayout.PREFERRED_SIZE, 81, GroupLayout.PREFERRED_SIZE))
-								.addComponent(btnOption))
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(lblSdiCalculator)))
+									.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+										.addComponent(lblNewNoteBook, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE)
+										.addComponent(lblNewNote)))
+								.addComponent(btnNewNote)
+								.addGroup(groupLayout.createSequentialGroup()
+									.addGap(47)
+									.addComponent(btnModernLayout)))
+							.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+							.addComponent(btnSDICalculator, GroupLayout.PREFERRED_SIZE, 81, GroupLayout.PREFERRED_SIZE)))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(lblSdiCalculator)
 					.addGap(44))
 		);
 		frmDashboard.getContentPane().setLayout(groupLayout);

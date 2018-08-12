@@ -58,10 +58,14 @@ public class NewNoteBook extends JFrame {
 
 	private static DefaultListModel<Note> notesLinkedList = new DefaultListModel<Note>();
 	
-	static Vector<Note> vec = new Vector<Note>(4);
+	//singleton instance
+	private static NewNoteBook uniqueInstance;
+	
+	
+	//static Vector<Note> vec = new Vector<Note>(4);
 	
 	private JPanel contentPane;
-	private JTextField textFieldNoteBookTitle;
+	private JTextField textFieldNoteTitle;
 	
 	//private variables
 	private Color bgColor = new Color(135, 206, 235); //default background color
@@ -78,8 +82,10 @@ public class NewNoteBook extends JFrame {
 	private JMenuItem mntmLoadNotes;
 	private JScrollPane pagesScrollPane;
 	private JTextArea textAreaNote1;
+	private int noteIndex;
 	
 	private static int noteCounter;
+	private JList pagesList;
 	
 	/**
 	 * Launch the application.
@@ -100,7 +106,7 @@ public class NewNoteBook extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public NewNoteBook() {
+	private NewNoteBook() {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(NewNoteBook.class.getResource("/resources/iconmonkey_small.png")));		
 		initComponents();
 		createEvents();
@@ -112,22 +118,10 @@ public class NewNoteBook extends JFrame {
 	private static void initNoteModel(){
 		notesLinkedList.addElement(new Note("Page title 1", "This is the first note"));
 		notesLinkedList.addElement(new Note("Page title 2", "This is the second note"));
-		
-		Note thisIsNote1 = new Note(); 
 		noteCounter++;
-		Note thisIsNote2 = new Note();
+
 		noteCounter++;
-		
-		thisIsNote1.setNoteDetails("This is details for note1");
-		thisIsNote1.setNoteTitle("This is the first note");
-		
-		thisIsNote2.setNoteDetails("This is details for note2");
-		thisIsNote2.setNoteTitle("This is the second note");
-		
-		vec.add(thisIsNote1);
-		vec.add(thisIsNote2);
-		//vec.add(new Note("Page title 1", "This is the first note"));
-		//vec.add(new Note("Page title 2", "This is the second note"));
+
 	}
 	
 	/*	//////////////////////////////////////////////////////////////////////////
@@ -197,15 +191,18 @@ public class NewNoteBook extends JFrame {
 		setContentPane(contentPane);
 		
 		JButton btnDeleteNote = new JButton("");
+		btnDeleteNote.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				deleteNoteEvent();
+			}
+		});
+		
 		btnDeleteNote.setOpaque(false);
 		btnDeleteNote.setContentAreaFilled(false);
 		btnDeleteNote.setBorderPainted(false);
 		//btnDeleteNote.setFocusPainted(false);
 		btnDeleteNote.setIcon(new ImageIcon(NewNoteBook.class.getResource("/resources/trashicon_32.png")));
-		btnDeleteNote.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-			}
-		});
 		
 		JButton btnPreferences = new JButton("");
 		btnPreferences.setOpaque(false);
@@ -229,11 +226,11 @@ public class NewNoteBook extends JFrame {
 		btnNewNote.setBorderPainted(false);
 		//btnNewNote.setFocusPainted(false);
 		btnNewNote.setIcon(new ImageIcon(NewNoteBook.class.getResource("/resources/newnoteeicon_32.png")));
-		textFieldNoteBookTitle = new JTextField();
-		textFieldNoteBookTitle.setText("Notebook Title 1");
-		textFieldNoteBookTitle.setBackground(new Color(135, 206, 235));
-		textFieldNoteBookTitle.setToolTipText("Enter Notebook Title");
-		textFieldNoteBookTitle.setColumns(10);
+		textFieldNoteTitle = new JTextField();
+		textFieldNoteTitle.setBackground(new Color(135, 206, 235));
+		textFieldNoteTitle.setToolTipText("Enter Note Title");
+		textFieldNoteTitle.setColumns(10);
+		
 		
 		
 		initNoteModel();
@@ -254,7 +251,7 @@ public class NewNoteBook extends JFrame {
 					.addContainerGap()
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 						.addComponent(note_1ScrollPane, GroupLayout.DEFAULT_SIZE, 393, Short.MAX_VALUE)
-						.addComponent(textFieldNoteBookTitle, GroupLayout.DEFAULT_SIZE, 393, Short.MAX_VALUE))
+						.addComponent(textFieldNoteTitle, GroupLayout.DEFAULT_SIZE, 393, Short.MAX_VALUE))
 					.addGap(18)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_contentPane.createSequentialGroup()
@@ -271,7 +268,7 @@ public class NewNoteBook extends JFrame {
 				.addGroup(gl_contentPane.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
-						.addComponent(textFieldNoteBookTitle, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE)
+						.addComponent(textFieldNoteTitle, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE)
 						.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING, false)
 							.addComponent(btnDeleteNote, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 							.addComponent(btnPreferences, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -283,23 +280,13 @@ public class NewNoteBook extends JFrame {
 					.addGap(20))
 		);
 		
-		JList pagesList = new JList();
-
-		pagesList.addMouseListener(new MouseAdapter() {
-			@Override
-			/*
-			public void mouseClicked(MouseEvent e) {
-				
-			}*/
-			public void mouseReleased(MouseEvent e) {
-				int i = pagesList.getSelectedIndex();
-				textAreaNote1.setText(vec.get(i).getNoteDetails());
-			}
-		});
+		pagesList = new JList();
+						
 		
 		pagesScrollPane.setViewportView(pagesList);
 		
 		textAreaNote1 = new JTextArea();
+		
 		textAreaNote1.setLineWrap(true);
 		textAreaNote1.setWrapStyleWord(true);
 		textAreaNote1.setBackground(Color.YELLOW);
@@ -307,7 +294,9 @@ public class NewNoteBook extends JFrame {
 		note_1ScrollPane.setViewportView(textAreaNote1);
 		contentPane.setLayout(gl_contentPane);
 		
-		textAreaNote1.setText(vec.get(0).getNoteDetails());
+		//textAreaNote1.setText(vec.get(0).getNoteDetails());
+		textAreaNote1.setText(notesLinkedList.getElementAt(0).getNoteDetails());
+		textFieldNoteTitle.setText(notesLinkedList.getElementAt(0).getNoteTitle());
 		
 		/*
 		 * adding linked list of notes to note list model
@@ -326,6 +315,46 @@ public class NewNoteBook extends JFrame {
                 return renderer;
             }
         });
+		
+		
+		
+		//////////////////////////////////////////////////////////////////////////
+		/*
+		 * Mouse Listener for J list Selection
+		 */
+		//////////////////////////////////////////////////////////////////////////
+		pagesList.addMouseListener(new MouseAdapter() {
+			@Override
+			/*
+			public void mouseClicked(MouseEvent e) {
+				
+			}*/
+			public void mouseReleased(MouseEvent e) {
+				noteIndex = pagesList.getSelectedIndex();
+				//textAreaNote1.setText(vec.get(i).getNoteDetails());
+				textAreaNote1.setText(notesLinkedList.getElementAt(noteIndex).getNoteDetails());
+				textFieldNoteTitle.setText(notesLinkedList.getElementAt(noteIndex).getNoteTitle());
+			}
+		});
+		//////////////////////////////////////////////////////////////////////////
+		/*
+		 * key listener for note title and text area notes
+		 */
+		//////////////////////////////////////////////////////////////////////////
+		textFieldNoteTitle.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				noteIndex = pagesList.getSelectedIndex();
+				notesLinkedList.getElementAt(noteIndex).setNoteTitle(textFieldNoteTitle.getText());
+			}
+		});
+		textAreaNote1.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				noteIndex = pagesList.getSelectedIndex();
+				notesLinkedList.getElementAt(noteIndex).setNoteDetails(textAreaNote1.getText());
+			}
+		});
 	}   
 	//////////////////////////////////////////////////////////////////////////
 	// END OF INITITALIZING COMPONENTS
@@ -333,18 +362,43 @@ public class NewNoteBook extends JFrame {
 	
 
 	
+	
+	//////////////////////////////////////////////////////////////////////////
+	//
+	// SPECIFIC EVENT HANDLING FOR THE 3 BUTTONS ON NOTEBOOK PAGE
+	//
+	// NEW & SETTINGS & DELETE
+	//
+	//////////////////////////////////////////////////////////////////////////
 	private void createNewNoteEvent() {
 		// TODO Auto-generated method stub
 		noteCounter++;
 		Note genericNote = new Note();
-		genericNote.setNoteTitle("This is a new note Title" + noteCounter);
-		genericNote.setNoteDetails("This is new note details" + noteCounter);
-		vec.add(genericNote);
-		
+		genericNote.setNoteTitle("New page" + noteCounter);
+		genericNote.setNoteDetails("This is new note details " + noteCounter);
+		//vec.add(genericNote);
+		notesLinkedList.addElement(genericNote);
 		
 		
 	}
+	private void deleteNoteEvent() {
+		// TODO Auto-generated method stub
+		int confirmed = JOptionPane.showConfirmDialog(null, 
+		        "Are you sure you want to delete this page?", "Exit Program Message Box",
+		        JOptionPane.YES_NO_OPTION);
+
+		    if (confirmed == JOptionPane.YES_OPTION) {
+		    	//JOptionPane.showMessageDialog(null, "Deleting Note");
+		    	//Code here to delete note
+		    	noteCounter--;
+		    	noteIndex = pagesList.getSelectedIndex();
+		    	notesLinkedList.removeElementAt(noteIndex);
+		    	
+		    }
+	}
 	
+	
+
 	//////////////////////////////////////////////////////////////////////////
 	//SETTERS AND GETTERS BELOW
 	//////////////////////////////////////////////////////////////////////////
@@ -379,4 +433,15 @@ public class NewNoteBook extends JFrame {
 	public String getNoteBookTitle(){
 		return this.noteBookTitle;
 	}
+	
+	
+	//SINGLETON INSTANCE
+	public static NewNoteBook getInstance() {
+		if(uniqueInstance == null) {
+			uniqueInstance = new NewNoteBook();
+		}
+		return uniqueInstance;
+	}
 }
+
+

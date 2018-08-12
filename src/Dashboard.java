@@ -110,33 +110,9 @@ public class Dashboard extends Note {
 			}
 		});
 		
-
-		/*
-		 * TESTING LINKED LIST HERE
-		 * Create Linked list and load into Note Book
-		 */
-		//noteListView = new JList();
-		
 		
 	}
-/*	private static void initNoteModel(){
-		notesLinkedList.addElement(new Note("Note title 1", "This is the first note"));
-		notesLinkedList.addElement(new Note("Note title 2", "This is the second note"));
-		notesLinkedList.addElement(new Note("Note title 3", "This is the third note"));
-		notesLinkedList.addElement(new Note("Note title 4", "This is the fourth note"));
-		notesLinkedList.addElement(new Note("Note title 5", "This is the fifth note"));
-		notesLinkedList.addElement(new Note("Note title 6", "This is the sixth note"));
-		notesLinkedList.addElement(new Note("Note title 7", "This is the seventh note"));
-		notesLinkedList.addElement(new Note("Note title 8", "This is the eighth note"));
-		//System.out.println(notesLinkedList.toString());
-	}*/
 
-	/*//returns a location used for testing
-	static Point x;
-	private static Point location(){
-		x.setLocation(100, 100);
-		return x;
-	}*/
 	/**
 	 * Create the application.
 	 */
@@ -177,9 +153,11 @@ public class Dashboard extends Note {
 					//JOptionPane.showMessageDialog(null, "New Button Pressed.");
 					//implementation of new Note
 					//frame.dispose();
+					
 					NewNote newNote = new NewNote();
 					newNote.setVisible(true);
 					newNote.setLocationRelativeTo(null);
+					
 		
 				} catch(Exception e){
 					JOptionPane.showMessageDialog(null, e);
@@ -194,28 +172,10 @@ public class Dashboard extends Note {
 		btnNewNoteBook.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try{	
-							NewNoteBook newNoteBook = new NewNoteBook();
+							/*NewNoteBook newNoteBook = new NewNoteBook();
 							newNoteBook.setVisible(true);
-							newNoteBook.setLocationRelativeTo(null);
-							
-							/*
-							 * add test list model
-							 */
-							
-							//noteListView.setModel(notesLinkedList);
-							//initNoteModel();
-							
-/*							noteListView.setCellRenderer(new DefaultListCellRenderer() {
-					            @Override
-					            public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
-					                Component renderer = super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
-					                if (renderer instanceof JLabel && value instanceof Note) {
-					                    // Here value will be of the Type 'CD'
-					                    ((JLabel) renderer).setText(((Note) value).getNoteTitle());
-					                }
-					                return renderer;
-					            }
-					        });*/
+							newNoteBook.setLocationRelativeTo(null);*/
+					NewNoteBook.getInstance().setVisible(true);
 						
 						} catch(Exception g){
 							JOptionPane.showMessageDialog(null, g);

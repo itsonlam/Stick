@@ -13,6 +13,7 @@ import javax.swing.JButton;
 import java.awt.GridLayout;
 import java.awt.Point;
 
+import javax.swing.AbstractButton;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.DefaultListModel;
 import javax.swing.GroupLayout;
@@ -32,6 +33,9 @@ import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 
 import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
+
 import javax.swing.ImageIcon;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -44,6 +48,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.ListSelectionEvent;
+import javax.swing.JCheckBoxMenuItem;
 
 //////////////////////////////////////////////////////////////////////////
 //
@@ -87,6 +92,9 @@ public class NewNoteBook extends JFrame {
 	private static int noteCounter;
 	private JList pagesList;
 	private JMenuItem mntmLoadClassicLayout;
+
+	protected AbstractButton txtField;
+	private JCheckBoxMenuItem chckbxmntmOneClickCopy;
 	
 	/**
 	 * Launch the application.
@@ -137,6 +145,21 @@ public class NewNoteBook extends JFrame {
 				System.out.println(notesLinkedList.toString());
 				System.out.println("TEST");
 				System.out.println("test in events");
+			}
+		});
+		
+		chckbxmntmOneClickCopy.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				JOptionPane.showMessageDialog(null, "one click copy checked");
+			}
+		});
+		textAreaNote1.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				StringSelection stringSelection = new StringSelection (txtField.getText());
+				Clipboard clpbrd = Toolkit.getDefaultToolkit ().getSystemClipboard ();
+				clpbrd.setContents (stringSelection, null);
 			}
 		});
 	}
@@ -199,17 +222,25 @@ public class NewNoteBook extends JFrame {
 				    		try{
 								
 				    			
+				    			//NewNote.getNoteInstance().setVisible(true);
+								
 								NewNote newNote = new NewNote();
-								//newNote.setNoteLocation(notesLinkedList.getElementAt(i).getLocation());
-								newNote.setLocation(notesLinkedList.getElementAt(i).getLocation());
 								newNote.setVisible(true);
-								//newNote.setLocationRelativeTo(null);
-								
-								
+								newNote.setLocationRelativeTo(null);
 								newNote.setNoteTitle(notesLinkedList.getElementAt(i).getNoteTitle());
 								newNote.setNoteDetailsClassic(notesLinkedList.getElementAt(i).getNoteDetails());
-								//newNote.setLocation(notesLinkedList.getElementAt(i).getLocation());
 							
+								//////////////////////////////////////////////////////////////////////////
+								/*
+								 * NEED TO FIND A WAY TO IMPLEMENT SAVING LOCATION OF NOTES
+								 * POSSIBLY USING PREFERENCES API
+								 */
+								//////////////////////////////////////////////////////////////////////////
+								
+								//newNote.setLocation(notesLinkedList.getElementAt(i).getLocation());
+								//newNote.setLocation(notesLinkedList.getElementAt(i).getLocation());
+								//newNote.setLocation(notesLinkedList.getElementAt(i).getLocation());
+								//newNote.setNoteLocation(notesLinkedList.getElementAt(i).getLocation());
 								
 					
 							} catch(Exception c){
@@ -229,6 +260,12 @@ public class NewNoteBook extends JFrame {
 		
 		mnEdit = new JMenu("Edit");
 		menuBar.add(mnEdit);
+		
+		chckbxmntmOneClickCopy = new JCheckBoxMenuItem("One Click Copy");
+		chckbxmntmOneClickCopy.setSelected(true);
+
+		chckbxmntmOneClickCopy.setIcon(new ImageIcon(NewNoteBook.class.getResource("/resources/mouseclick_24.png")));
+		mnEdit.add(chckbxmntmOneClickCopy);
 		
 		mnHelp = new JMenu("Help");
 		menuBar.add(mnHelp);
@@ -333,6 +370,7 @@ public class NewNoteBook extends JFrame {
 		pagesScrollPane.setViewportView(pagesList);
 		
 		textAreaNote1 = new JTextArea();
+		
 		
 		textAreaNote1.setLineWrap(true);
 		textAreaNote1.setWrapStyleWord(true);
@@ -505,6 +543,8 @@ public class NewNoteBook extends JFrame {
 		}
 		return uniqueInstance;
 	}
+	
+
 }
 
 

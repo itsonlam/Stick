@@ -56,6 +56,8 @@ import java.awt.event.ComponentEvent;
 
 public class NewNote extends JFrame{
 	
+	
+	private static NewNote uniqueNoteInstance;
 	//note attributes cannot be changed from outside
 	// default color of note
 	private Color color = new Color(102, 205, 170);
@@ -71,7 +73,7 @@ public class NewNote extends JFrame{
 	private JScrollPane scrollPane;
 	
 	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
+		/*EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
 					NewNote frame = new NewNote();
@@ -85,7 +87,7 @@ public class NewNote extends JFrame{
 				}
 			}
 		});
-		
+		*/
 		}
 	
 	
@@ -188,4 +190,10 @@ public class NewNote extends JFrame{
 		return noteNumber;
 	}
 	
+	public static NewNote getNoteInstance() {
+		if (uniqueNoteInstance == null) {
+			uniqueNoteInstance = new NewNote();
+		}
+		return uniqueNoteInstance;
+	}
 }

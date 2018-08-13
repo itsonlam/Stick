@@ -86,6 +86,7 @@ public class NewNoteBook extends JFrame {
 	
 	private static int noteCounter;
 	private JList pagesList;
+	private JMenuItem mntmLoadClassicLayout;
 	
 	/**
 	 * Launch the application.
@@ -170,11 +171,57 @@ public class NewNoteBook extends JFrame {
 		mnFile = new JMenu("File");
 		menuBar.add(mnFile);
 		
-		mntmLoadNotes = new JMenuItem("Load Notes");
+		mntmLoadNotes = new JMenuItem("Load Modern Layout");
 		
 		
-		mntmLoadNotes.setIcon(new ImageIcon(NewNoteBook.class.getResource("/resources/replay_24.png")));
+		mntmLoadNotes.setIcon(new ImageIcon(NewNoteBook.class.getResource("/resources/notesmodern_24.png")));
 		mnFile.add(mntmLoadNotes);
+		
+		mntmLoadClassicLayout = new JMenuItem("Load Classic Layout");
+		
+		//////////////////////////////////////////////////////////////////////////
+		/*
+		 * LOADING CLASSIC LAYOUT OF NOTES. USING SIZE OF VECTOR IN FOR LOOP CREATING 
+		 * AND REMEMBER LOCATION OF NOTES
+		 */
+		//////////////////////////////////////////////////////////////////////////
+		mntmLoadClassicLayout.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				int clayout = JOptionPane.showConfirmDialog(null, 
+				        "Are you sure you want to load the classic layout?", "Exit Program Message Box",
+				        JOptionPane.YES_NO_OPTION);
+
+				    if (clayout == JOptionPane.YES_OPTION) {
+				      //JOptionPane.showMessageDialog(null, "classic layout clicked");
+				    	System.out.println("This is the size of the notesLinkedList: " + notesLinkedList.getSize());
+				    	for(int i = 0; i < notesLinkedList.getSize(); i++) {
+				    		try{
+								
+				    			
+								NewNote newNote = new NewNote();
+								//newNote.setNoteLocation(notesLinkedList.getElementAt(i).getLocation());
+								newNote.setLocation(notesLinkedList.getElementAt(i).getLocation());
+								newNote.setVisible(true);
+								//newNote.setLocationRelativeTo(null);
+								
+								
+								newNote.setNoteTitle(notesLinkedList.getElementAt(i).getNoteTitle());
+								newNote.setNoteDetailsClassic(notesLinkedList.getElementAt(i).getNoteDetails());
+								//newNote.setLocation(notesLinkedList.getElementAt(i).getLocation());
+							
+								
+					
+							} catch(Exception c){
+								JOptionPane.showMessageDialog(null, c);
+							}
+				    	}
+				    }
+			}
+		});
+
+		mntmLoadClassicLayout.setIcon(new ImageIcon(NewNoteBook.class.getResource("/resources/note_24.png")));
+		mnFile.add(mntmLoadClassicLayout);
 		
 		mntmQuit = new JMenuItem("Close");
 		mntmQuit.setIcon(new ImageIcon(NewNoteBook.class.getResource("/resources/closeicon_24.png")));
@@ -417,6 +464,22 @@ public class NewNoteBook extends JFrame {
 	public void setNoteBookTitle(String newNoteBookTitle){
 		this.noteBookTitle = newNoteBookTitle;
 	}
+	public static void setNoteLocation(Point newNoteLocation, String selectedNoteTitle) {
+		System.out.println("Searching vector for note title");
+		for (int i=0; i < notesLinkedList.getSize(); i++) {
+			if (selectedNoteTitle == notesLinkedList.getElementAt(i).getNoteTitle()) {
+				System.out.println("MATCH");
+				int newselectedindex = i;
+				notesLinkedList.getElementAt(newselectedindex).setLocation(newNoteLocation);
+				System.out.println("Location of Vector note: " + notesLinkedList.getElementAt(newselectedindex).getLocation());
+			}
+			// else if for two matching titles scenario
+			//if no matching titles
+			else{
+				System.out.println("NO MATCH");
+			}
+		}
+	}
 	
 	/*
 	 * Getters for note book used for linked list
@@ -435,7 +498,7 @@ public class NewNoteBook extends JFrame {
 	}
 	
 	
-	//SINGLETON INSTANCE
+	//SINGLETON DESIGN PATTERN
 	public static NewNoteBook getInstance() {
 		if(uniqueInstance == null) {
 			uniqueInstance = new NewNoteBook();

@@ -203,14 +203,6 @@ public class Dashboard extends Note {
 		
 		//NEW BUTTON
 		btnNewNote = new JButton("");
-		btnNewNote.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				int randInt = rand.nextInt(3);
-				NewNote.setNoteNumber(randInt);
-				addTestObject();
-			}
-		});
 		
 		btnNewNote.setOpaque(false);
 		btnNewNote.setContentAreaFilled(false);
@@ -245,7 +237,7 @@ public class Dashboard extends Note {
 		//btnSDICalculator.setFocusPainted(false);
 		btnSDICalculator.setIcon(new ImageIcon(Dashboard.class.getResource("/resources/calculatoricon_64.png")));
 		
-		JLabel lblNewNoteBook = new JLabel("New Notebook");
+		JLabel lblNewNoteBook = new JLabel("My Notebook");
 		
 		JLabel lblNewNote = new JLabel("New Note");
 		

@@ -19,9 +19,9 @@ public class Note{
 	//CONSTRUCTORS
 	public Note(){
 		super();
-		location = NewNote.getNoteLocation();
-		noteDetails = NewNote.getTextArea();
-		noteTitle = NewNote.getNoteTitle();
+	//	location = NewNote.getNoteLocation();
+	//	noteDetails = NewNote.getTextArea();
+		//noteTitle = NewNote.getNoteTitle();
 	}
 	public Note(String newNoteTitle, String newNoteDetails){
 		noteTitle = newNoteTitle;

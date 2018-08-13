@@ -18,6 +18,8 @@ import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.JTextArea;
 import java.awt.Color;
+import java.awt.Component;
+
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
@@ -41,6 +43,8 @@ import javax.swing.JRadioButton;
 import java.awt.GridLayout;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 
 //////////////////////////////////////////////////////////////////////////
 //
@@ -56,9 +60,9 @@ public class NewNote extends JFrame{
 	// default color of note
 	private Color color = new Color(102, 205, 170);
 	private static Point noteLocation;
-	private static String noteTitle;
-	private static String s;
-	private static int noteNumber;
+	private String noteTitle;
+	private String classicNoteDetails;
+	private int noteNumber;
 	/**
 	 * Launch the application.
 	 */
@@ -71,6 +75,10 @@ public class NewNote extends JFrame{
 			public void run() {
 				try {
 					NewNote frame = new NewNote();
+					//frame.setLocation(1960,168);
+					frame.setLocation(getNoteLocation());
+					//frame.setLocation(notesLinkedList.getLocation());
+					//frame.setNoteLocation(noteLocation);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -78,12 +86,6 @@ public class NewNote extends JFrame{
 			}
 		});
 		
-		//creating linked list for contents of all Notes
-		/*
-		LinkedList<String> linked list = new LinkedList<String>();
-		linkedlist.add(NewNote.contents);
-		System.out.println(linkedlist.toString());
-		*/ //DEPRACATED. testing file reader and writer
 		}
 	
 	
@@ -91,18 +93,36 @@ public class NewNote extends JFrame{
 	 * Create the frame.
 	 */
 	public NewNote() {
+		
 		initComponents();
+		
+		//////////////////////////////////////////////////////////////////////////
+		/*
+		 * COMPONENT LISTENER. WILL STORE NEW LOCATION OF COMPONENT TO REOPEN UPON
+		 * LOADING. 
+		 */
+		//////////////////////////////////////////////////////////////////////////
+		addComponentListener(new ComponentAdapter() {
+			@Override
+			public void componentMoved(ComponentEvent e) {
+				noteLocation = textAreaNote.getLocationOnScreen();
+				System.out.println(noteTitle);
+				NewNoteBook.setNoteLocation(noteLocation, noteTitle);
+				System.out.println("component moved to location: " + textAreaNote.getLocationOnScreen());
+			}
+		});
 	}
 	
 	private void initComponents() {
+		//setLocation(1939,274);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(NewNote.class.getResource("/resources/iconmonkey_small.png")));
-		setTitle("Note");
+		setTitle("this is the top title");
 		//prompt to close frame
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		addWindowListener(new WindowAdapter() {
 			  public void windowClosing(WindowEvent e) {
 			    int confirmed = JOptionPane.showConfirmDialog(null, 
-			        "Are you sure you want to delete this note?", "Exit Program Message Box",
+			        "Are you sure you want to close this note?", "Exit Program Message Box",
 			        JOptionPane.YES_NO_OPTION);
 
 			    if (confirmed == JOptionPane.YES_OPTION) {
@@ -121,19 +141,9 @@ public class NewNote extends JFrame{
 		getContentPane().add(scrollPane);
 		
 		textAreaNote = new JTextArea();
-		textAreaNote.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyReleased(KeyEvent arg0) {
-				//implement method to save to linked list
-				Dashboard.setTestObject(textAreaNote.getText());
-				System.out.println(noteNumber);
-				//Dashboard.testHashMap();
-				//implement a way to update the linked list rather than adding new node
-			}
-		});
 		textAreaNote.setBackground(new Color(135, 206, 235));
 		textAreaNote.setWrapStyleWord(true);
-		textAreaNote.setWrapStyleWord(true);
+		textAreaNote.setLineWrap(true);
 		scrollPane.setViewportView(textAreaNote);
 	}
 
@@ -151,13 +161,16 @@ public class NewNote extends JFrame{
 		this.noteLocation = newlocation;
 	}
 	public void setNoteTitle(String newTitle){
-		//this.noteTitle = newTitle;
-		//cannot change note title from outside
+		setTitle(newTitle);
+		this.noteTitle = newTitle;
 	}
-	public static void setNoteNumber(int number){
-		noteNumber = number;
+	public void setNoteDetailsClassic(String noteDetails) {
+		classicNoteDetails = noteDetails;
+		textAreaNote.setText(noteDetails);
 	}
-	
+	public void setNoteLocation(Point passNoteLocation) {
+		setLocation(passNoteLocation);
+	}
 	/*
 	 * GETTERS able to get colors, location and title of notes for linked list
 	 */
@@ -168,13 +181,10 @@ public class NewNote extends JFrame{
 	public static Point getNoteLocation(){
 		return noteLocation;
 	}
-	public static String getNoteTitle(){
+	public String getNoteTitle(){
 		return noteTitle;
 	}
-	public static String getTextArea(){
-		return s;
-	}
-	public static int getNoteNumber(){
+	public int getNoteNumber(){
 		return noteNumber;
 	}
 	

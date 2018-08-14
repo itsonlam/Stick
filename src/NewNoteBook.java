@@ -221,15 +221,35 @@ public class NewNoteBook extends JFrame {
 				    	for(int i = 0; i < notesLinkedList.getSize(); i++) {
 				    		try{
 								
+				    			//if instance at index is already created
+				    				//then create instance of note
+				    			//else
+				    				//skip set instance to already created note
+				    			if (notesLinkedList.getElementAt(i).getInstanceName() == null) {
+				    				notesLinkedList.getElementAt(i).setInstanceName(notesLinkedList.get(i).toString());
+				    			}
 				    			
+				    			NewNote.getInstanceWithName(i, 
+			    						notesLinkedList.getElementAt(i).getNoteDetails(),
+			    						notesLinkedList.getElementAt(i).getLocation(), notesLinkedList).setVisible(true);
+				    			NewNote.getInstanceWithName(i, 
+			    						notesLinkedList.getElementAt(i).getNoteDetails(),
+			    						notesLinkedList.getElementAt(i).getLocation(), notesLinkedList)
+				    					.setNoteDetailsClassic(notesLinkedList.getElementAt(i).getNoteDetails());
+				    			NewNote.getInstanceWithName(i, 
+			    						notesLinkedList.getElementAt(i).getNoteDetails(),
+			    						notesLinkedList.getElementAt(i).getLocation(), notesLinkedList)
+				    					.setNoteTitle(notesLinkedList.getElementAt(i).getNoteTitle());
+				    			
+				    			//DEPRACATED. CREATING ONLY 1 INSTANCE OF NOTE OBJECT
 				    			//NewNote.getNoteInstance().setVisible(true);
-								
+								/*
 								NewNote newNote = new NewNote();
 								newNote.setVisible(true);
 								newNote.setLocationRelativeTo(null);
 								newNote.setNoteTitle(notesLinkedList.getElementAt(i).getNoteTitle());
 								newNote.setNoteDetailsClassic(notesLinkedList.getElementAt(i).getNoteDetails());
-							
+								*/
 								//////////////////////////////////////////////////////////////////////////
 								/*
 								 * NEED TO FIND A WAY TO IMPLEMENT SAVING LOCATION OF NOTES

@@ -8,7 +8,9 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.Vector;
 
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -37,6 +39,8 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Toolkit;
+
+import javax.swing.DefaultListModel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JRadioButton;
@@ -56,13 +60,15 @@ import java.awt.event.ComponentEvent;
 
 public class NewNote extends JFrame{
 	
+	static NoteFactory test = new NoteFactory();
+	private static NewNote uniqueNoteInstance;
 	//note attributes cannot be changed from outside
 	// default color of note
 	private Color color = new Color(102, 205, 170);
 	private static Point noteLocation;
 	private String noteTitle;
 	private String classicNoteDetails;
-	private int noteNumber;
+	private static int noteNumber;
 	/**
 	 * Launch the application.
 	 */
@@ -71,7 +77,7 @@ public class NewNote extends JFrame{
 	private JScrollPane scrollPane;
 	
 	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
+		/*EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
 					NewNote frame = new NewNote();
@@ -85,7 +91,7 @@ public class NewNote extends JFrame{
 				}
 			}
 		});
-		
+		*/
 		}
 	
 	
@@ -188,4 +194,24 @@ public class NewNote extends JFrame{
 		return noteNumber;
 	}
 	
+	
+	//SINGLETON DESIGN PATTERN
+	public static NewNote getInstanceWithName(int instanceName, String noteText, Point notePosition, DefaultListModel List) {
+		/*
+		//if instance never created create a new instance
+		if(uniqueNoteInstance == null) {
+			uniqueNoteInstance = new NewNote();
+		}
+		//search list for instance that was already created
+		else {
+			
+		}
+			
+		return uniqueNoteInstance;
+		*/
+		
+		return test.makeNotes(instanceName, List, noteText);
+		
+	}
+
 }
